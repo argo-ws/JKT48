@@ -49,7 +49,16 @@ const members = [
     { Name: "Ribka Budiman", Birthday: "13/01/2009" },
     { Name: "Regina Wilian", Birthday: "10/12/2009" },
     { Name: "Shabilqis Naila", Birthday: "01/09/2008" },
-    { Name: "Victoria Kimberly", Birthday: "08/03/2010" }
+    { Name: "Victoria Kimberly", Birthday: "08/03/2010" },
+    { Name: "Astrella Virgiananda", Birthday: "06/08/2010"},
+    { Name: "Aulia Riza", Birthday: "14/07/2007"},
+    { Name: "Bong Aprilli", Birthday: "01/04/2010"},
+    { Name: "Hagia Sopia", Birthday: "01/07/2008"},
+    { Name: "Humaira Ramadhani", Birthday: "13/08/2011"},
+    { Name: "Jacqueline Immanuela", Birthday: "09/07/2009"},
+    { Name: "Jemima Evodie", Birthday: "09/11/2009"},
+    { Name: "Mikaela Kusjanto", Birthday: "15/12/2007"},
+    { Name: "Nur Intan", Birthday: "24/02/2006"}
   ];
   
   // Helper function to calculate time until next birthday
