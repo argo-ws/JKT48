@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JKT48 Birthday Countdown</title>
     <style>
+        /* Define CSS variables for theme colors */
         :root {
             --primary-color: #e91e63;
             --secondary-color: #333;
@@ -14,6 +15,7 @@
             --card-shadow: rgba(0, 0, 0, 0.1);
         }
 
+        /* Basic body styling */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
@@ -22,16 +24,19 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Container for centering content */
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
 
+        /* Header styling */
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
 
+        /* Controls styling for search and theme toggle */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -40,6 +45,7 @@
             flex-wrap: wrap;
         }
 
+        /* Search box styling */
         .search-box {
             padding: 8px 15px;
             border: 2px solid var(--primary-color);
@@ -49,6 +55,7 @@
             max-width: 300px;
         }
 
+        /* Theme toggle button styling */
         .theme-toggle {
             background-color: var(--primary-color);
             color: white;
@@ -59,6 +66,7 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Member card styling */
         .member-card {
             background-color: var(--card-background);
             border-radius: 15px;
@@ -69,11 +77,13 @@
             animation: fadeIn 0.5s ease;
         }
 
+        /* Hover effect for member cards */
         .member-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px var(--card-shadow);
         }
 
+        /* Member name styling */
         .member-name {
             font-size: 1.5em;
             font-weight: bold;
@@ -81,29 +91,34 @@
             color: var(--primary-color);
         }
 
+        /* Countdown text styling */
         .countdown {
             font-size: 1.2em;
             color: var(--secondary-color);
             margin-bottom: 10px;
         }
 
+        /* Birthday date text styling */
         .birthday-date {
             color: #666;
             font-size: 0.9em;
             margin-top: 5px;
         }
 
+        /* Special styling for today's birthday */
         .birthday-today {
             background: linear-gradient(45deg, #ff6b6b, #e91e63);
             color: white;
         }
 
+        /* Override text color for today's birthday */
         .birthday-today .member-name,
         .birthday-today .countdown,
         .birthday-today .birthday-date {
             color: white;
         }
 
+        /* Fade-in animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -116,6 +131,7 @@
             }
         }
 
+        /* Dark theme styling */
         .dark-theme {
             --background-color: #1a1a1a;
             --card-background: #2d2d2d;
@@ -123,10 +139,12 @@
             --card-shadow: rgba(0, 0, 0, 0.3);
         }
 
+        /* Dark theme birthday date color */
         .dark-theme .birthday-date {
             color: #aaa;
         }
 
+        /* Responsive styling for small screens */
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -157,78 +175,78 @@
             <h1>JKT48 Birthday Countdown</h1>
         </div>
         <div class="controls">
-            <input type="text" class="search-box" placeholder="Cari member..." id="searchInput">
-            <button class="theme-toggle" id="themeToggle">Ganti Tema</button>
+            <input type="text" class="search-box" placeholder="Cari member..." id="searchInput" aria-label="Search for member">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">Ganti Tema</button>
         </div>
         <div id="memberList"></div>
     </div>
 
     <script>
-        // Data member tetap sama seperti sebelumnya
-        const members =
-            [
-                {"name": "Feni Fitryanti", "birthday": "16/01/1999"},
-                {"name": "Shania Gracia", "birthday": "31/08/1999"},
-                {"name": "Gita Sekar Andarini", "birthday": "30/06/2001"},
-                {"name": "Angelina Christy", "birthday": "05/12/2005"},
-                {"name": "Febriola Sinambela", "birthday": "26/02/2005"},
-                {"name": "Freyana Jayawardana", "birthday": "13/02/2006"},
-                {"name": "Helisma Putri", "birthday": "15/06/2000"},
-                {"name": "Jessica Chandra", "birthday": "23/09/2005"},
-                {"name": "Mutiara Azzahra", "birthday": "12/07/2004"},
-                {"name": "Cornelia Vanisa", "birthday": "26/07/2002"},
-                {"name": "Fiony Alveria", "birthday": "04/02/2002"},
-                {"name": "Flora Shafiq", "birthday": "04/04/2005"},
-                {"name": "Lulu Salsabila", "birthday": "23/10/2002"},
-                {"name": "Indah Cahya", "birthday": "20/03/2001"},
-                {"name": "Kathrina Irene", "birthday": "26/07/2006"},
-                {"name": "Marsha Lenathea", "birthday": "09/01/2006"},
-                {"name": "Amanda Sukma", "birthday": "17/12/2004"},
-                {"name": "Aurellia", "birthday": "29/10/2002"},
-                {"name": "Callista Alifia", "birthday": "08/08/2005"},
-                {"name": "Gabriela Abigail", "birthday": "07/08/2006"},
-                {"name": "Indira Seruni", "birthday": "26/04/2004"},
-                {"name": "Jesslyn Elly", "birthday": "13/09/2001"},
-                {"name": "Raisha Syifa", "birthday": "11/11/2007"},
-                {"name": "Alya Amanda", "birthday": "26/08/2006"},
-                {"name": "Anindya Ramadhani", "birthday": "18/10/2005"},
-                {"name": "Cathleen Nixie", "birthday": "28/05/2009"},
-                {"name": "Celline Thefani", "birthday": "09/04/2007"},
-                {"name": "Chelsea Davina", "birthday": "23/12/2009"},
-                {"name": "Chynthia Yaputera", "birthday": "22/11/2003"},
-                {"name": "Dena Natalia", "birthday": "16/12/2005"},
-                {"name": "Desy Natalia", "birthday": "16/12/2005"},
-                {"name": "Gendis Mayrannisa", "birthday": "23/06/2010"},
-                {"name": "Grace Octaviani", "birthday": "18/10/2007"},
-                {"name": "Greesella Adhalia", "birthday": "10/01/2006"},
-                {"name": "Michelle Alexandra", "birthday": "22/04/2009"},
-                {"name": "Abigail Rachel", "birthday": "06/08/2008"},
-                {"name": "Adeline Wijaya", "birthday": "01/09/2007"},
-                {"name": "Aurhel Alana", "birthday": "14/09/2006"},
-                {"name": "Catherina Vallencia", "birthday": "21/08/2007"},
-                {"name": "Fritzy Rosmerian", "birthday": "28/07/2008"},
-                {"name": "Hillary Abigail", "birthday": "19/10/2007"},
-                {"name": "Jazzlyn Trisha", "birthday": "16/02/2011"},
-                {"name": "Letycia Moreen", "birthday": "07/06/2010"},
-                {"name": "Michelle Levia", "birthday": "24/01/2009"},
-                {"name": "Nayla Suji", "birthday": "18/06/2007"},
-                {"name": "Nina Tutachia", "birthday": "16/10/2009"},
-                {"name": "Oline Manuel", "birthday": "03/11/2007"},
-                {"name": "Ribka Budiman", "birthday": "13/01/2009"},
-                {"name": "Regina Wilian", "birthday": "10/12/2009"},
-                {"name": "Shabilqis Naila", "birthday": "01/09/2008"},
-                {"name": "Victoria Kimberly", "birthday": "08/03/2010"},
-                {"name": "Astrella Virgiananda", "birthday": "06/08/2010"},
-                {"name": "Aulia Riza", "birthday": "14/07/2007"},
-                {"name": "Bong Aprilli", "birthday": "01/04/2010"},
-                {"name": "Hagia Sopia", "birthday": "01/07/2008"},
-                {"name": "Humaira Ramadhani", "birthday": "13/08/2011"},
-                {"name": "Jacqueline Immanuela", "birthday": "09/07/2009"},
-                {"name": "Jemima Evodie", "birthday": "09/11/2009"},
-                {"name": "Mikaela Kusjanto", "birthday": "15/12/2007"},
-                {"name": "Nur Intan", "birthday": "24/02/2006"}
-            ];
+        // List of members with their birthdays
+        const members = [
+        {"name": "Feni Fitryanti", "birthday": "16/01/1999"},
+            {"name": "Shania Gracia", "birthday": "31/08/1999"},
+            {"name": "Gita Sekar Andarini", "birthday": "30/06/2001"},
+            {"name": "Angelina Christy", "birthday": "05/12/2005"},
+            {"name": "Febriola Sinambela", "birthday": "26/02/2005"},
+            {"name": "Freya Jayawardana", "birthday": "13/02/2006"},
+            {"name": "Helisma Putri", "birthday": "15/06/2000"},
+            {"name": "Jessica Chandra", "birthday": "23/09/2005"},
+            {"name": "Mutiara Azzahra", "birthday": "12/07/2004"},
+            {"name": "Cornelia Vanisa", "birthday": "26/07/2002"},
+            {"name": "Fiony Alveria", "birthday": "04/02/2002"},
+            {"name": "Flora Shafiq", "birthday": "04/04/2005"},
+            {"name": "Lulu Salsabila", "birthday": "23/10/2002"},
+            {"name": "Indah Cahya", "birthday": "20/03/2001"},
+            {"name": "Kathrina Irene", "birthday": "26/07/2006"},
+            {"name": "Marsha Lenathea", "birthday": "09/01/2006"},
+            {"name": "Amanda Sukma", "birthday": "17/12/2004"},
+            {"name": "Aurellia", "birthday": "29/10/2002"},
+            {"name": "Callista Alifia", "birthday": "08/08/2005"},
+            {"name": "Gabriela Abigail", "birthday": "07/08/2006"},
+            {"name": "Indira Seruni", "birthday": "26/04/2004"},
+            {"name": "Jesslyn Elly", "birthday": "13/09/2001"},
+            {"name": "Raisha Syifa", "birthday": "11/11/2007"},
+            {"name": "Alya Amanda", "birthday": "26/08/2006"},
+            {"name": "Anindya Ramadhani", "birthday": "18/10/2005"},
+            {"name": "Cathleen Nixie", "birthday": "28/05/2009"},
+            {"name": "Celline Thefani", "birthday": "09/04/2007"},
+            {"name": "Chelsea Davina", "birthday": "23/12/2009"},
+            {"name": "Chynthia Yaputera", "birthday": "22/11/2003"},
+            {"name": "Dena Natalia", "birthday": "16/12/2005"},
+            {"name": "Desy Natalia", "birthday": "16/12/2005"},
+            {"name": "Gendis Mayrannisa", "birthday": "23/06/2010"},
+            {"name": "Grace Octaviani", "birthday": "18/10/2007"},
+            {"name": "Greesella Adhalia", "birthday": "10/01/2006"},
+            {"name": "Michelle Alexandra", "birthday": "22/04/2009"},
+            {"name": "Abigail Rachel", "birthday": "06/08/2008"},
+            {"name": "Adeline Wijaya", "birthday": "01/09/2007"},
+            {"name": "Aurhel Alana", "birthday": "14/09/2006"},
+            {"name": "Catherina Vallencia", "birthday": "21/08/2007"},
+            {"name": "Fritzy Rosmerian", "birthday": "28/07/2008"},
+            {"name": "Hillary Abigail", "birthday": "19/10/2007"},
+            {"name": "Jazzlyn Trisha", "birthday": "16/02/2011"},
+            {"name": "Letycia Moreen", "birthday": "07/06/2010"},
+            {"name": "Michelle Levia", "birthday": "24/01/2009"},
+            {"name": "Nayla Suji", "birthday": "18/06/2007"},
+            {"name": "Nina Tutachia", "birthday": "16/10/2009"},
+            {"name": "Oline Manuel", "birthday": "03/11/2007"},
+            {"name": "Ribka Budiman", "birthday": "13/01/2009"},
+            {"name": "Regina Wilian", "birthday": "10/12/2009"},
+            {"name": "Shabilqis Naila", "birthday": "01/09/2008"},
+            {"name": "Victoria Kimberly", "birthday": "08/03/2010"},
+            {"name": "Astrella Virgiananda", "birthday": "06/08/2010"},
+            {"name": "Aulia Riza", "birthday": "14/07/2007"},
+            {"name": "Bong Aprilli", "birthday": "01/04/2010"},
+            {"name": "Hagia Sopia", "birthday": "01/07/2008"},
+            {"name": "Humaira Ramadhani", "birthday": "13/08/2011"},
+            {"name": "Jacqueline Immanuela", "birthday": "09/07/2009"},
+            {"name": "Jemima Evodie", "birthday": "09/11/2009"},
+            {"name": "Mikaela Kusjanto", "birthday": "15/12/2007"},
+            {"name": "Nur Intan", "birthday": "24/02/2006"}
+        ];
 
+        // Function to calculate the countdown to a birthday
         function calculateCountdown(birthday) {
             const [day, month, year] = birthday.split('/');
             const now = new Date();
@@ -236,6 +254,7 @@
 
             let birthdayThisYear = new Date(thisYear, month - 1, day);
 
+            // If the birthday has already passed this year, calculate for next year
             if (birthdayThisYear < now) {
                 birthdayThisYear = new Date(thisYear + 1, month - 1, day);
             }
@@ -243,6 +262,7 @@
             const diffTime = birthdayThisYear - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+            // Calculate months, weeks, and days remaining
             const months = Math.floor(diffDays / 30);
             const remainingDays = diffDays % 30;
             const weeks = Math.floor(remainingDays / 7);
@@ -257,6 +277,7 @@
             };
         }
 
+        // Function to format the countdown text
         function formatCountdown(countdown) {
             if (countdown.isToday) {
                 return "🎉 HAPPY BIRTHDAY! 🎉";
@@ -277,6 +298,7 @@
             return result.join(', ') + ' lagi';
         }
 
+        // Function to format the birthday date
         function formatDate(dateStr) {
             const [day, month, year] = dateStr.split('/');
             const months = [
@@ -286,18 +308,21 @@
             return `${day} ${months[parseInt(month) - 1]} ${year}`;
         }
 
+        // Function to display members based on search term
         function displayMembers(searchTerm = '') {
             const memberList = document.getElementById('memberList');
             const filteredMembers = members.filter(member =>
                 member.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
+            // Sort members by the countdown to their birthday
             const sortedMembers = [...filteredMembers].sort((a, b) => {
                 const countdownA = calculateCountdown(a.birthday).totalDays;
                 const countdownB = calculateCountdown(b.birthday).totalDays;
                 return countdownA - countdownB;
             });
 
+            // Render member cards
             memberList.innerHTML = sortedMembers.map(member => {
                 const countdown = calculateCountdown(member.birthday);
                 const isBirthdayToday = countdown.isToday;
@@ -311,28 +336,28 @@
             }).join('');
         }
 
-        // Theme toggling
+        // Theme toggling logic
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
             localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
 
-        // Search functionality
+        // Search input event listener
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             displayMembers(e.target.value);
         });
 
-        // Load saved theme
+        // Load saved theme from local storage
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-theme');
         }
 
-        // Initial display
+        // Initial display of members
         displayMembers();
 
-        // Update every minute
+        // Update the display every minute
         setInterval(() => displayMembers(searchInput.value), 1000 * 60);
     </script>
 </body>
